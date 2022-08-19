@@ -3,6 +3,11 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const UserSchema = new mongoose.Schema({
+    wallet: {
+		type: mongoose.SchemaTypes.ObjectId,
+		ref: "Wallet",
+		default: null,
+	},
     firstName: {
         type: String,
         trim: true,
@@ -28,8 +33,6 @@ const UserSchema = new mongoose.Schema({
         minlenght: 6,
         select: false
     },
-    resetPasswordToken: String,
-    resetPasswordExpire: Date,
     isActive: {
         type: Boolean,
         default: true,

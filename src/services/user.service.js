@@ -2,7 +2,7 @@ const { User } = require('../models')
 const ErrorResponse = require('../utils/errorResponse')
 
 const getUserById = async(id) => {
-    const user = await User.findById(id);
+    const user = await User.findById(id).populate('wallet');
     return user;
 }
 
@@ -24,10 +24,7 @@ const createUser = async(data) => {
 
 
 const updateUser = async(user, updateBody) => {
-    const getUser = await User.findById(user.id)
-    if (updateBody.emaill && await getUser.isEmailTaken(updateBody.email)) { 
-        throw new ErrorResponse(`This email address has already being used`, 400)
-    } 
+    const getUser = await User.findById(user)
 
     Object.assign(getUser, updateBody);
     await getUser.save()
