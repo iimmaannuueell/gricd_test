@@ -7,7 +7,6 @@ const Joi = require('joi');
 describe('Authentication', () => {
     describe('User registration', () => {
 
-        // jest.setTimeout(10000);
         it('should create new account on register', async() => {
             const postData = {
                 firstName: 'John',
@@ -22,7 +21,6 @@ describe('Authentication', () => {
             expect(response.status).toBeTruthy()
         })
 
-        // jest.setTimeout(10000);
         it('should return error when input is missing', async() => {
             const postData = {
                 firstName: 'John',
@@ -36,5 +34,30 @@ describe('Authentication', () => {
             expect(response.status).toEqual(400)
         })
         
+    })
+
+
+    describe('Login', () => {
+        it('should return 200 status code on login', async() => {
+            const postData = {
+                email: 'John@yopmail.com',
+                password: 'password123',
+            }
+            const response = await supertest(app).post('/v1/auth/login')
+            .send(postData)
+
+            expect(200)
+            expect(response.status).toBeTruthy()
+        })
+
+        it('should return error when input is missing', async() => {
+            const postData = {
+                password: 'password123',
+            }
+            const response = await supertest(app).post('/v1/auth/login')
+            .send(postData)
+
+            expect(response.status).toEqual(400)
+        })
     })
 })
