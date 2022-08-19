@@ -1,5 +1,6 @@
 const express = require('express');
 const helmet = require('helmet');
+const morgan = require('morgan');
 const cors = require('cors');
 require('dotenv').config();
 
@@ -13,6 +14,11 @@ const app = express();
 app.use(helmet());
 app.use(cors());
 app.use(express.json());
+
+// Dev logging middler
+if(process.env.NODE_ENV === 'development') {
+    app.use(morgan('dev'));
+}
 
 
 // v1 api routes
